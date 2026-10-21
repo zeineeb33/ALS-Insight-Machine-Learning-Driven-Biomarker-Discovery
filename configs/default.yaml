@@ -70,7 +70,7 @@ selection:
     subsample: 0.8
     colsample_bytree: 0.5
   permutation:
-    n_permutations: 50
+    n_permutations: 0  # e.g. 50 for a donor-level permutation test (slow)
     model: elastic_net
 
 consensus:

@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "results_version": "GSE124439-v0.1.0-cbc63dd1",
+  "generated_at": "2026-10-21T10:02:36+00:00",
+  "package_version": "0.1.0",
+  "config_fingerprint": "cbc63dd1ec0e71db49c32e6d98fdc3b14730c7d5e16a517bc4542ca69bf9afc1",
+  "dataset": {
+    "accession": "GSE124439",
+    "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE124439",
+    "citation": "Tam OH et al. Postmortem Cortex Samples Identify Distinct Molecular Subtypes of ALS: Retrotransposon Activation, Oxidative Stress, and Activated Glia. Cell Reports 29(5):1164-1177 (2019). doi:10.1016/j.celrep.2019.09.066",
+    "counts_sha256": "c7f26b44797a654703f71e4dfb200022416f6d430e2d0ee1999335d305310e3c"
+  },
+  "contrast": {
+    "case": "ALS Spectrum MND",
+    "control": "Non-Neurological Control",
+    "case_label": "ALS",
+    "control_label": "Control"
+  },
+  "samples": {
+    "n_samples_in_contrast": 162,
+    "n_subjects_in_contrast": 88,
+    "n_samples_analyzed": 161,
+    "samples_per_condition": {
+      "ALS": 144,
+      "Control": 17
+    },
+    "subjects_per_condition": {
+      "ALS": 76,
+      "Control": 12
+    },
+    "outliers_removed": [
+      "GSM3533325"
+    ],
+    "n_features": 28953,
+    "n_features_tested": 20121
+  },
+  "differential_expression": {
+    "design": "~ region + condition",
+    "alpha": 0.05,
+    "lfc_threshold": 1.0,
+    "n_tested": 20121,
+    "n_significant": 2358,
+    "n_up": 921,
+    "n_down": 1437,
+    "n_significant_lfc": 32,
+    "n_significant_lfc_mle": 59
+  },
+  "classification": {
+    "cv": {
+      "outer_folds": 5,
+      "outer_repeats": 3,
+      "inner_folds": 3,
+      "grouping": "subject_id",
+      "k_features": 1000
+    },
+    "positive_class": "ALS",
+    "models": {
+      "elastic_net": {
+        "metrics": {
+          "roc_auc": {
+            "mean": 0.69794061302682,
+            "std": 0.19529955397573373
+          },
+          "balanced_accuracy": {
+            "mean": 0.5976053639846743,
+            "std": 0.15118533989711602
+          },
+          "sensitivity": {
+            "mean": 0.9396551724137931,
+            "std": 0.038330265100482576
+          },
+          "specificity": {
+            "mean": 0.25555555555555554,
+            "std": 0.31254629286744895
+          },
+          "mcc": {
+            "mean": 0.1808252554554801,
+            "std": 0.2824818676304145
+          }
+        },
+        "jaccard_stability": 0.14239379459153792,
+        "mean_selected_features": 58.0
+      },
+      "xgboost": {
+        "metrics": {
+          "roc_auc": {
+            "mean": 0.6946496989600437,
+            "std": 0.228961230339243
+          },
+          "balanced_accuracy": {
+            "mean": 0.6207580733442802,
+            "std": 0.16142378303001678
+          },
+          "sensitivity": {
+            "mean": 0.9859605911330048,
+            "std": 0.022341757711044928
+          },
+          "specificity": {
+            "mean": 0.25555555555555554,
+            "std": 0.31254629286744895
+          },
+          "mcc": {
+            "mean": 0.3163015234126125,
+            "std": 0.37942582137178194
+          }
+        },
+        "jaccard_stability": 0.11159944472350454,
+        "mean_selected_features": 125.0
+      }
+    },
+    "permutation_test": {
+      "model": null,
+      "n_permutations": 0,
+      "observed_roc_auc": null,
+      "null_mean": null,
+      "p_value": null
+    }
+  },
+  "top_biomarkers": [
+    "GBP4",
+    "TCHH",
+    "SLC2A14",
+    "ANKRD20A9P",
+    "COLEC11",
+    "PKD1L3",
+    "ATP2A1",
+    "GIMAP7",
+    "C2orf74",
+    "GUF1"
+  ],
+  "disclaimer": "Research and educational analysis of public data. Not a diagnostic tool and not medical advice; candidate genes are statistical associations that require independent validation."
+}
