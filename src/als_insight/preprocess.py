@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import logging
-import math
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -15,6 +14,7 @@ from als_insight import cache
 from als_insight.config import Config
 from als_insight.download import raw_files
 from als_insight.geo import is_transposable_element, parse_miniml, read_count_archive
+from als_insight.normalization import low_count_mask
 
 logger = logging.getLogger(__name__)
 
@@ -41,12 +41,6 @@ class Dataset:
     @property
     def groups(self) -> np.ndarray:
         return self.metadata["subject_id"].to_numpy()
-
-
-def low_count_mask(counts: np.ndarray, min_count: int, min_sample_fraction: float) -> np.ndarray:
-    """Keep features with >= ``min_count`` reads in at least a fraction of samples."""
-    min_samples = max(1, math.ceil(min_sample_fraction * counts.shape[0]))
-    return np.asarray((counts >= min_count).sum(axis=0) >= min_samples)
 
 
 def build_dataset(counts: pd.DataFrame, annotations: pd.DataFrame, cfg: Config) -> Dataset:

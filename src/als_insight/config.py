@@ -22,6 +22,7 @@ class DatasetConfig(_Strict):
     counts_sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
     miniml_sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
     expected_samples: int | None = Field(default=None, gt=0)
+    citation: str | None = None
     timeout_seconds: float = Field(default=120.0, gt=0)
 
 
@@ -29,6 +30,7 @@ class PathsConfig(_Strict):
     data_dir: Path = Path("data")
     artifacts_dir: Path = Path("artifacts")
     results_dir: Path = Path("results")
+    report_dir: Path = Path("reports")
 
 
 class ContrastConfig(_Strict):
@@ -57,6 +59,7 @@ class PreprocessConfig(_Strict):
 
 
 class ExplorationConfig(_Strict):
+    n_top_variable: int = Field(default=1000, ge=2)
     n_components: int = Field(default=10, ge=2)
     outlier_components: int = Field(default=4, ge=1)
     outlier_robust_z: float = Field(default=3.5, gt=0)
@@ -78,7 +81,7 @@ class DifferentialConfig(_Strict):
 
 
 class ElasticNetConfig(_Strict):
-    C: list[float] = Field(default_factory=lambda: [0.01, 0.1, 1.0], min_length=1)
+    C: list[float] = Field(default_factory=lambda: [0.05, 0.2, 1.0], min_length=1)
     l1_ratio: list[float] = Field(default_factory=lambda: [0.5, 0.9], min_length=1)
     max_iter: int = Field(default=5000, ge=100)
 
@@ -107,7 +110,7 @@ class SelectionConfig(_Strict):
     outer_folds: int = Field(default=5, ge=2)
     outer_repeats: int = Field(default=3, ge=1)
     inner_folds: int = Field(default=3, ge=2)
-    k_features: int = Field(default=2000, ge=1)
+    k_features: int = Field(default=1000, ge=1)
     seed: int = 42
     n_jobs: int = -1
     scoring: Literal["roc_auc", "balanced_accuracy", "average_precision"] = "roc_auc"

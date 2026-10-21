@@ -68,6 +68,7 @@ select = ["E", "W", "F", "I", "B", "UP", "SIM", "RUF", "PL", "NPY", "PD", "N", "
 ignore = [
     "PLC0415", # heavy scientific imports are deferred so the CLI and API start fast
     "PLR0913", # scientific functions legitimately take many parameters
+    "PLR0917", # ... including positional X, y, groups in the scikit-learn style
     "PLR2004", # magic values in comparisons are fine in thresholds/tests
     "N803",    # sklearn convention: X as argument name
     "N806",    # sklearn convention: X as variable name
@@ -77,7 +78,10 @@ ignore = [
 testpaths = ["tests"]
 addopts = "-ra --strict-markers"
 markers = ["slow: end-to-end tests that run the full (synthetic) pipeline"]
-filterwarnings = ["ignore::DeprecationWarning:anndata.*"]
+filterwarnings = [
+    "ignore::DeprecationWarning:anndata.*",
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]
 
 [tool.coverage.run]
 source = ["als_insight"]

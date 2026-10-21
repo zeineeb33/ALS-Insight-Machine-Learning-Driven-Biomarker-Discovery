@@ -9,11 +9,16 @@ dataset:
   # the MINiML family file periodically, so it is validated structurally instead.
   counts_sha256: c7f26b44797a654703f71e4dfb200022416f6d430e2d0ee1999335d305310e3c
   expected_samples: 176
+  citation: >-
+    Tam OH et al. Postmortem Cortex Samples Identify Distinct Molecular Subtypes of ALS:
+    Retrotransposon Activation, Oxidative Stress, and Activated Glia.
+    Cell Reports 29(5):1164-1177 (2019). doi:10.1016/j.celrep.2019.09.066
 
 paths:
   data_dir: data
   artifacts_dir: artifacts
-  results_dir: results
+  results_dir: results   # versioned bundle served by the API (committed)
+  report_dir: reports    # Markdown/HTML report + figures (committed)
 
 contrast:
   case: ALS Spectrum MND
@@ -33,6 +38,7 @@ preprocess:
     Motor Cortex (Lateral): motor
 
 exploration:
+  n_top_variable: 1000  # PCA on the most variable log-normalised features (DESeq2 plotPCA style)
   n_components: 10
   outlier_components: 4
   outlier_robust_z: 3.5
@@ -49,12 +55,12 @@ selection:
   outer_folds: 5
   outer_repeats: 3
   inner_folds: 3
-  k_features: 2000
+  k_features: 1000  # ANOVA-F pre-selection, re-fitted inside every training fold
   seed: 42
   n_jobs: -1
   scoring: roc_auc
   elastic_net:
-    C: [0.01, 0.1, 1.0]
+    C: [0.05, 0.2, 1.0]
     l1_ratio: [0.5, 0.9]
     max_iter: 5000
   xgboost:

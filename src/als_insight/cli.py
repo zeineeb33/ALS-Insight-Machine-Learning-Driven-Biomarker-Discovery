@@ -57,5 +57,46 @@ def preprocess(config: ConfigOpt = Path("configs/default.yaml"), force: ForceOpt
     step.run(_load(config), force=force)
 
 
+@app.command()
+def analyze(config: ConfigOpt = Path("configs/default.yaml"), force: ForceOpt = False) -> None:
+    """PCA + outlier detection, then PyDESeq2 differential expression."""
+    from als_insight import analyze as step
+
+    step.run(_load(config), force=force)
+
+
+@app.command()
+def select(config: ConfigOpt = Path("configs/default.yaml"), force: ForceOpt = False) -> None:
+    """Nested, subject-grouped CV of elastic net + XGBoost and consensus gene ranking."""
+    from als_insight import selection as step
+
+    step.run(_load(config), force=force)
+
+
+@app.command()
+def report(config: ConfigOpt = Path("configs/default.yaml"), force: ForceOpt = False) -> None:
+    """Render figures + Markdown/HTML report and export the versioned results bundle."""
+    from als_insight import report as step
+
+    step.run(_load(config), force=force)
+
+
+@app.command()
+def run(config: ConfigOpt = Path("configs/default.yaml"), force: ForceOpt = False) -> None:
+    """Run every step (download -> preprocess -> analyze -> select -> report)."""
+    from als_insight import analyze as analyze_step
+    from als_insight import preprocess as preprocess_step
+    from als_insight import report as report_step
+    from als_insight import selection as selection_step
+    from als_insight.download import download as download_step
+
+    cfg = _load(config)
+    download_step(cfg)
+    preprocess_step.run(cfg, force=force)
+    analyze_step.run(cfg, force=force)
+    selection_step.run(cfg, force=force)
+    report_step.run(cfg, force=force)
+
+
 if __name__ == "__main__":  # pragma: no cover
     app()
