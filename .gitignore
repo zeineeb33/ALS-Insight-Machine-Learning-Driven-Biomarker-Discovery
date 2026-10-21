@@ -1,0 +1,28 @@
+# Data and pipeline outputs (reproducible via `als-insight run`)
+data/
+artifacts/
+models/
+*.h5ad
+*.parquet
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Editors / OS
+.vscode/
+.idea/
+.ipynb_checkpoints/
+.DS_Store

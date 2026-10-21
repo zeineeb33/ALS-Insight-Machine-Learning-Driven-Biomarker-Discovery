@@ -1,0 +1,75 @@
+# ALS Insight pipeline configuration (validated by als_insight.config.Config).
+# Dataset: Tam et al. 2019, Cell Reports, post-mortem frontal/motor cortex RNA-seq.
+
+dataset:
+  accession: GSE124439
+  miniml_url: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE124nnn/GSE124439/miniml/GSE124439_family.xml.tgz
+  counts_url: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE124nnn/GSE124439/suppl/GSE124439_RAW.tar
+  # The raw-count archive is immutable since 2019 and pinned by checksum. GEO regenerates
+  # the MINiML family file periodically, so it is validated structurally instead.
+  counts_sha256: c7f26b44797a654703f71e4dfb200022416f6d430e2d0ee1999335d305310e3c
+  expected_samples: 176
+
+paths:
+  data_dir: data
+  artifacts_dir: artifacts
+  results_dir: results
+
+contrast:
+  case: ALS Spectrum MND
+  control: Non-Neurological Control
+  case_label: ALS
+  control_label: Control
+
+preprocess:
+  include_transposable_elements: true
+  min_library_size: 1000000
+  min_count: 10
+  min_sample_fraction: 0.1
+  region_map:
+    Frontal Cortex: frontal
+    Motor Cortex: motor
+    Motor Cortex (Medial): motor
+    Motor Cortex (Lateral): motor
+
+exploration:
+  n_components: 10
+  outlier_components: 4
+  outlier_robust_z: 3.5
+  remove_outliers: true
+
+differential:
+  covariates: [region]
+  alpha: 0.05
+  lfc_threshold: 1.0
+  shrink_lfc: true
+  n_cpus: 4
+
+selection:
+  outer_folds: 5
+  outer_repeats: 3
+  inner_folds: 3
+  k_features: 2000
+  seed: 42
+  n_jobs: -1
+  scoring: roc_auc
+  elastic_net:
+    C: [0.01, 0.1, 1.0]
+    l1_ratio: [0.5, 0.9]
+    max_iter: 5000
+  xgboost:
+    max_depth: [2, 3]
+    n_estimators: 300
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.5
+  permutation:
+    n_permutations: 50
+    model: elastic_net
+
+consensus:
+  top_n: 100
+  weights: {de: 1.0, elastic_net: 1.0, xgboost: 1.0}
+
+report:
+  top_n_table: 25
