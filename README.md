@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/zeineeb33/ALS-Insight-Machine-Learning-Driven-Biomarker-Discovery/actions/workflows/ci.yml/badge.svg)](https://github.com/zeineeb33/ALS-Insight-Machine-Learning-Driven-Biomarker-Discovery/actions/workflows/ci.yml)
 
+**Live demo:** https://als-insight.onrender.com (free Render instance: the first request after a period of inactivity can take up to a minute while it wakes up) · [API docs](https://als-insight.onrender.com/docs)
+
 ALS Insight is a reproducible pipeline that ranks candidate biomarkers of amyotrophic lateral sclerosis (ALS) using RNA-seq from post-mortem human cortex (GEO [GSE124439](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE124439)). It downloads the public data with checksum checks, runs QC, PCA-based outlier detection and PyDESeq2 differential expression, and evaluates elastic-net and XGBoost classifiers with **nested cross-validation grouped by donor, so no information leaks between training and test folds**. It then combines statistical and model evidence into one ranked gene list. A FastAPI service with a small web UI serves the versioned results, and it fits on Render's free tier.
 
 > **Disclaimer:** this is a research and educational analysis of public data. It is not a diagnostic tool and not medical advice.
