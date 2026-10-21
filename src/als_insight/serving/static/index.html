@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ALS Insight</title>
+  <meta name="description" content="ALS vs control RNA-seq biomarker explorer (GEO GSE124439): differential expression, nested-CV model evidence and consensus ranking.">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js" defer></script>
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="page-header">
+    <div>
+      <h1>ALS Insight</h1>
+      <p class="subtitle" id="subtitle">RNA-seq biomarker discovery in post-mortem cortex</p>
+    </div>
+    <nav><a href="/docs">API docs</a></nav>
+  </header>
+
+  <p class="disclaimer" role="note" id="disclaimer">
+    Research and educational analysis of public data. Not a diagnostic tool and not medical advice.
+  </p>
+
+  <section class="tiles" id="tiles" aria-label="Key results"></section>
+
+  <section class="card" aria-labelledby="search-title">
+    <h2 id="search-title">Look up a gene</h2>
+    <form id="search-form" class="search" autocomplete="off">
+      <label for="gene-input" class="visually-hidden">Gene symbol</label>
+      <input id="gene-input" list="gene-options" placeholder="e.g. TBX3, ANKRD20A9P, L1HS:L1:LINE" maxlength="64" required>
+      <datalist id="gene-options"></datalist>
+      <button type="submit">Search</button>
+    </form>
+    <div id="gene-result" aria-live="polite"></div>
+  </section>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="volcano-title">
+      <h2 id="volcano-title">Volcano plot</h2>
+      <p class="hint">Click a point to inspect the gene. Colour shows FDR-significant features.</p>
+      <div id="volcano" class="plot" role="img" aria-label="Volcano plot of differential expression"></div>
+    </section>
+    <section class="card" aria-labelledby="pca-title">
+      <h2 id="pca-title">PCA of samples</h2>
+      <p class="hint">Log-normalised expression, most variable features. Ringed points were flagged as outliers.</p>
+      <div id="pca" class="plot" role="img" aria-label="PCA scatter of samples coloured by condition"></div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="top-title">
+    <h2 id="top-title">Top consensus candidates</h2>
+    <p class="hint">Combined rank of DE p-value, elastic-net coefficient and XGBoost gain across outer CV folds.</p>
+    <div class="table-wrap">
+      <table id="top-table">
+        <thead>
+          <tr><th>Rank</th><th>Gene</th><th>log2FC</th><th>padj</th><th>EN freq.</th><th>XGB freq.</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="page-footer" id="footer"></footer>
+</body>
+</html>
