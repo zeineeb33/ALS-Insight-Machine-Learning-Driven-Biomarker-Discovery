@@ -1,0 +1,9 @@
+# Allow-list: only what the runtime image needs.
+*
+!pyproject.toml
+!uv.lock
+!README.md
+!LICENSE
+!src/
+!results/
+**/__pycache__

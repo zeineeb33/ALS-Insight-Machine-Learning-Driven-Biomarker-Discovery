@@ -1,0 +1,10 @@
+# Render Blueprint: Dashboard -> New -> Blueprint -> select this repository.
+services:
+  - type: web
+    name: als-insight
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: true
